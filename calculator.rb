@@ -30,8 +30,8 @@ def  cancel_operations()
 end
 
 class String
-  def is_integer?
-    self.to_i.to_s == self
+  def is_integer_or_is_float?
+    self.to_f.to_s == self || self.to_i.to_s == self
   end
 end
 
@@ -44,10 +44,11 @@ loop do
   if(split_command_array.length == 2)
     command_string = split_command_array[0]
     operand = split_command_array[1]
-    if(operand.is_integer?)     # Checking for commands like 'add abc' where operand not an number
-      operand = operand.to_f    # Converting operand to float
+    
+    if(operand.is_integer_or_is_float?)     # Checking for commands like 'add abc' where operand not an number
+      operand = operand.to_f                # Converting operand to float
 
-      case command_string
+      case command_string                   # Using switch on command string
       when "add"
         puts add_numbers(operand)
       when "subtract"
@@ -55,7 +56,11 @@ loop do
       when "multiply"
         puts multiply(operand)
       when "divide"
-        puts divide(operand)
+        if(operand != 0.0)
+          puts divide(operand)
+        else
+          puts "Division by zero is not allowed"
+        end
       else
         puts "Sorry, This is an invalid operation."
       end
@@ -64,7 +69,7 @@ loop do
     end  
     
   else
-    command_string = split_command_array[0]
+    command_string = split_command_array[0]   # When there is no operand
 
     case command_string
     when "cancel"
