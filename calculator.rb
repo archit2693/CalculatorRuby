@@ -24,23 +24,34 @@ def divide(input_number)
   return $number
 end
 
-#Reading users command
+class String
+  def is_integer?
+    self.to_i.to_s == self
+  end
+end
+
+# Reading users command
 input_command_from_user = gets.chomp.to_s
 split_command_array = input_command_from_user.split(" ")
+
 # Checking for command without any operand
 if(split_command_array.length == 2)
   command_string = split_command_array[0]
-  operand = split_command_array[1].to_f     # Converting operand to float
-  
-  case command_string
-  when "add"
-    puts add_numbers(operand)
-  when "subtract"
-    puts subtract(operand)
+  operand = split_command_array[1]
+  if(operand.is_integer?)     # Checking for commands like 'add abc' where operand not an number
+    operand = operand.to_f    # Converting operand to float
+
+    case command_string
+    when "add"
+      puts add_numbers(operand)
+    when "subtract"
+      puts subtract(operand)
+    else
+      puts "Sorry, This is an invalid operation."
+    end
   else
-    puts "Sorry, This is an invalid operation."
-  end
-       
+    puts "Invalid Operand !"
+  end  
   
 else
   puts "Invalid command ! "
